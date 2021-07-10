@@ -7,6 +7,12 @@ body {
     color:#333;
 }
 
+.container {
+    width: 80%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
 a {
     color:#3fad37;
     text-decoration:none;
