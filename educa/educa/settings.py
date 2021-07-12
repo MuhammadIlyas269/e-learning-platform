@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,8 +41,14 @@ INSTALLED_APPS = [
 
     #new app 
     'courses.apps.CoursesConfig',
-    'students.apps.StudentsConfig'
+    'students.apps.StudentsConfig',
+
+    # 3rd party
+    'rest_framework',
+    'embed_video',
+    'memcache_status',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,6 +77,20 @@ TEMPLATES = [
         },
     },
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
 WSGI_APPLICATION = 'educa.wsgi.application'
 
@@ -104,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LOGIN_REDIRECT_URL = 'manage_course_list'
+LOGIN_REDIRECT_URL = reverse_lazy('student_course_list')
 
 LOGOUT_REDIRECT_URL = 'login'
 
